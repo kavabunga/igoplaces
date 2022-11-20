@@ -1,4 +1,9 @@
-export default class Api {
+import {
+  serverUrl,
+  serverToken
+} from '../utils/constants';
+
+class Api {
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -71,3 +76,13 @@ export default class Api {
     return this._fetchRequest(url, options);
   }
 }
+
+const api = new Api({
+  baseUrl: serverUrl,
+  headers: {
+    authorization: serverToken,
+    'Content-Type': 'application/json'
+  }
+});
+
+export default api;
