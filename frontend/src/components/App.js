@@ -6,6 +6,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupImage from './PopupImage';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [currentUser, setСurrentUser] = React.useState({});
@@ -46,24 +47,24 @@ function App() {
     setSelectedCard(null);
   }
 
+  function handleUpdateUser({name, about}) {
+    api.patchData({name, about}, 'users/me')
+    .then(res => {
+      setСurrentUser(res);
+      closeAllPopups();
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
         <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddItem={handleAddItemClick} onCardClick={handleCardClick} />
         <Footer />
-        <PopupWithForm name='edit-profile' title='Редактировать профиль' button='Сохранить' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-          <fieldset className="form__fieldset">
-            <label>
-              <input type="text" className="form__input form__input_name_name" name="name" placeholder="Имя" required minLength="2" maxLength="40" />
-              <span className="form__input-error input-name-error" />
-            </label>
-            <label>
-              <input type="text" className="form__input form__input_name_about" name="about" placeholder="Профессия" required minLength="2" maxLength="200" />
-              <span className="form__input-error input-about-error" />
-            </label>
-          </fieldset>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
         <PopupWithForm name='edit-avatar' title='Обновить аватар' button='Сохранить' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
           <fieldset className="form__fieldset">
             <label>

@@ -26,7 +26,7 @@ export default function Main({onEditProfile, onEditAvatar, onAddItem, onCardClic
 
   function handleCardDelete(card) {
     api.deleteData('cards', card._id).then((newCard) => {
-      setCards((state) => state.filter((c) => c._id != card._id))
+      setCards((state) => state.filter((c) => c._id !== card._id))
     })
   }
 
