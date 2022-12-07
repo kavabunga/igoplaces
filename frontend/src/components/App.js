@@ -7,6 +7,7 @@ import Footer from './Footer';
 import PopupImage from './PopupImage';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [currentUser, setСurrentUser] = React.useState({});
@@ -58,21 +59,25 @@ function App() {
     })
   }
 
+  function handleUpdateAvatar({avatar}) {
+    api.patchData({avatar}, 'users/me/avatar')
+    .then(res => {
+      setСurrentUser(res);
+      closeAllPopups();
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
         <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddItem={handleAddItemClick} onCardClick={handleCardClick} />
         <Footer />
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-        <PopupWithForm name='edit-avatar' title='Обновить аватар' button='Сохранить' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          <fieldset className="form__fieldset">
-            <label>
-              <input type="url" className="form__input form__input_name_image-link" name="link" placeholder="Ссылка на картинку" required />
-              <span className="form__input-error input-link-error" />
-            </label>
-          </fieldset>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
         <PopupWithForm name='add-item' title='Новое место' button='Создать' isOpen={isAddItemPopupOpen} onClose={closeAllPopups}>
           <fieldset className="form__fieldset">
             <label>
