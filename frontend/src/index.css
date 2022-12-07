@@ -32,6 +32,7 @@
 @import url("./blocks/element/__heart-button/_active/element__heart-button_active.css");
 @import url("./blocks/element/__heart-counter/element__heart-counter.css");
 @import url("./blocks/element/__delete-button/element__delete-button.css");
+@import url("./blocks/element/__delete-button/_visible/element__delete-button_visible.css");
 
 @import url("./blocks/footer/footer.css");
 @import url("./blocks/footer/__copyright/footer__copyright.css");
