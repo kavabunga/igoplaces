@@ -8,7 +8,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
 
   React.useEffect(() => {
     setUser(currentUser);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleChangeInput(e) {
     setUser({...user, [e.target.name]: e.target.value});

@@ -10,7 +10,11 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
 function App() {
-  const [currentUser, setСurrentUser] = React.useState({});
+  const [currentUser, setСurrentUser] = React.useState({
+    name: '',
+    about: '',
+    avatar: ''
+  });
   const [cards, setCards] = React.useState([]);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddItemPopupOpen, setAddItemPopupOpen] = React.useState(false);
@@ -18,14 +22,12 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   React.useEffect(() => {
-    api.getUserData().then(res => {
-        setСurrentUser(res);
-      })
-    .catch(err => {
-        console.log(err)
-      });
-    api.getCardsData().then(res => {
-        setCards(res);
+    const cardPromise = api.getCardsData();
+    const userPromise = api.getUserData();
+    Promise.all([cardPromise, userPromise])
+    .then(res => {
+        setCards(res[0]);
+        setСurrentUser(res[1]);
       })
     .catch(err => {
         console.log(err)
@@ -79,15 +81,31 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    api.likeCard(card._id, !isLiked).then(newCard => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    api.likeCard(card._id, !isLiked)
+    .then(newCard => {
+      setCards((state) =>
+        state.map((c) =>
+          c._id === card._id ? newCard : c
+        )
+      )
+    })
+    .catch(err => {
+      console.log(err)
     });
   }
 
   function handleCardDelete(card) {
-    api.deleteData('cards', card._id).then(res => {
-      setCards((state) => state.filter((c) => c._id !== card._id))
+    api.deleteData('cards', card._id)
+    .then(res => {
+      setCards(state =>
+        state.filter(c =>
+          c._id !== card._id
+        )
+      )
     })
+    .catch(err => {
+      console.log(err)
+    });
   }
 
   function handleAddPlaceSubmit(card) {

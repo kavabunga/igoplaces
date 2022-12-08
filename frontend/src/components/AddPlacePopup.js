@@ -4,6 +4,10 @@ import PopupWithForm from "./PopupWithForm"
 export default function AddPlacePopup ({isOpen, onClose, onAddPlace}) {
   const [card, setCard] = React.useState({name: '', link: ''});
 
+  React.useEffect(() => {
+    setCard({name: '', link: ''});
+  }, [isOpen]);
+
   function handleChangeInput(e) {
     setCard({...card, [e.target.name]: e.target.value});
   }
@@ -11,7 +15,6 @@ export default function AddPlacePopup ({isOpen, onClose, onAddPlace}) {
   function handleSubmit(e) {
     e.preventDefault();
     onAddPlace(card);
-    setCard({name: '', link: ''});
   }
 
   return (
