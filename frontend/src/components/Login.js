@@ -6,8 +6,15 @@ export default function Login({ onLogin }) {
     password: ''
   });
 
+  React.useEffect(() => {
+    setData({
+      email: '',
+      password: ''
+    });
+  }, [])
+
   function handleChangeInput(e) {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setData({
       ...data,
       [name]: value
@@ -17,25 +24,16 @@ export default function Login({ onLogin }) {
     e.preventDefault()
     const { email, password } = data;
     if (!email || !password) {
-        return;
+      return;
     }
     onLogin(email, password)
-    .then(res => {
-      setData({
-        email: '',
-        password: ''
-      });
-    })
-    .catch(err =>
-      console.log(err)
-    );
   };
 
   return (
     <section className="auth page__element">
       <div className="auth__container">
         <h2 className="auth__title">Вход</h2>
-        <form className='form form_type_login' name="form" onSubmit={handleSubmit} noValidate>
+        <form className='form form_type_login' name="form" onSubmit={handleSubmit}>
           <fieldset className="form__fieldset">
             <label>
               <input type="email" className="form__input form__input_theme_dark form__input_name_email" name="email" placeholder="Email" required minLength="2" maxLength="40" value={data.email} onChange={handleChangeInput} />
@@ -46,7 +44,7 @@ export default function Login({ onLogin }) {
               <span className="form__input-error input-password-error" />
             </label>
           </fieldset>
-        <button type="submit" className="form__submit-button form__submit-button_theme_dark auth__button">Войти</button>
+          <button type="submit" className="form__submit-button form__submit-button_theme_dark auth__button">Войти</button>
         </form>
       </div>
     </section>
