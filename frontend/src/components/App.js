@@ -3,7 +3,7 @@ import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import api from '../utils/Api';
 import * as auth from './Auth';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
-import { AppContext } from './AppContext';
+import { AppContext } from '../contexts/AppContext';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -23,6 +23,7 @@ function App() {
     avatar: ''
   });
   const [email, setEmail] = React.useState('');
+  const [isRegistrationSuccess, setIsRegistrationSuccess] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -69,6 +70,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddItemPopupOpen(false);
     setEditAvatarPopupOpen(false);
+    setInfoTooltipOpen(false);
     setSelectedCard(null);
   }
 
@@ -158,11 +160,16 @@ function App() {
   function onRegister(email, password) {
     return auth.register(email, password)
     .then(res => {
-      if(res.statusCode !== 400){
+      if (res.statusCode !== 400) {
+        setIsRegistrationSuccess(true);
         history.push('/sign-in');
       } else {
+        setIsRegistrationSuccess(false);
         console.log('Авторизация не удалась')
       }
+    })
+    .finally(res => {
+      setInfoTooltipOpen(true);
     })
     .catch(err =>
       console.log(err)
@@ -219,7 +226,7 @@ function App() {
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
           <AddPlacePopup isOpen={isAddItemPopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-          <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} />
+          <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} isRegistrationSuccess={isRegistrationSuccess}/>
           {/* <PopupWithForm name='delete-confirmation' title='Вы уверены?' button='Да' onClose={closeAllPopups} /> */}
           <PopupImage card={selectedCard} onClose={closeAllPopups} />
         </div>
