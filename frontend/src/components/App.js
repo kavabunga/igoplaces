@@ -170,7 +170,6 @@ function App() {
               exact
               path='/'
               component={Main}
-              loggedIn={loggedIn}
               cards={cards}
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete}
@@ -179,12 +178,6 @@ function App() {
               onAddItem={handleAddItemClick}
               onCardClick={handleCardClick}
             />
-            {/* <ProtectedRoute
-              exact
-              path='/'
-              component={Footer}
-            /> */}
-
             <Route exact path='/sign-in'>
               <Login />
             </Route>
@@ -195,9 +188,7 @@ function App() {
               {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />}
             </Route>
           </Switch>
-          <Route exact path='/'>
-            <Footer />
-          </Route>
+          <Footer />
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
           <AddPlacePopup isOpen={isAddItemPopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
