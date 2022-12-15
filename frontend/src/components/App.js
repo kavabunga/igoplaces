@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import api from '../utils/Api';
+import * as auth from './Auth';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import { AppContext } from './AppContext';
-import * as auth from './Auth';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -17,12 +17,12 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
 function App() {
-  const [currentUser, setСurrentUser] = React.useState({
+  const [currentUser, setCurrentUser] = React.useState({
     name: '',
     about: '',
-    avatar: '',
-    email: ''
+    avatar: ''
   });
+  const [email, setEmail] = React.useState('');
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -33,18 +33,20 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    tokenCheck();
     const cardPromise = api.getCardsData();
     const userPromise = api.getUserData();
     Promise.all([cardPromise, userPromise])
     .then(res => {
         setCards(res[0]);
-        setСurrentUser(res[1]);
+        setCurrentUser(res[1]);
       })
     .catch(err => {
         console.log(err)
       });
+  }, [])
 
+  React.useEffect(() => {
+    tokenCheck()
   }, [])
 
   function handleCardClick(card) {
@@ -73,7 +75,7 @@ function App() {
   function handleUpdateUser({name, about}) {
     api.patchData({name, about}, 'users/me')
     .then(res => {
-      setСurrentUser(res);
+      setCurrentUser(res);
       closeAllPopups();
     })
     .catch(err => {
@@ -84,7 +86,7 @@ function App() {
   function handleUpdateAvatar({avatar}) {
     api.patchData({avatar}, 'users/me/avatar')
     .then(res => {
-      setСurrentUser(res);
+      setCurrentUser(res);
       closeAllPopups();
     })
     .catch(err => {
@@ -132,39 +134,64 @@ function App() {
     })
   }
 
-  function handleLogin(userEmail) {
-    console.log('TESTING, loggedIn before handler: ', loggedIn);
+  function handleLogin(email) {
     setLoggedIn(true);
-    console.log('TESTING, loggedIn after handler: ', loggedIn);
-    setСurrentUser({
-      ...currentUser,
-      email: userEmail
-    });
-    console.log('TESTING, currentUser after handler: ', currentUser);
+    setEmail(email);
   }
 
   function tokenCheck() {
     const token = localStorage.getItem('token');
-    console.log('TESTING, token: ', token);
     if (token) {
       auth.getContent(token)
       .then(res => {
-        console.log('TESTING, res: ', res);
         if (res) {
           handleLogin(res.data.email);
-          console.log('TESTING, res.data.email', res.data.email);
           history.push('/');
-          console.log('TESTING, hist pushed to /');
         }
-      });
+      })
+      .catch(err =>
+        console.log(err)
+      );
     }
   }
 
+  function onRegister(email, password) {
+    return auth.register(email, password)
+    .then(res => {
+      if(res.statusCode !== 400){
+        history.push('/sign-in');
+      } else {
+        console.log('Авторизация не удалась')
+      }
+    })
+    .catch(err =>
+      console.log(err)
+    );
+  }
+
+  function onLogin(email, password) {
+    return auth.authorize(email, password)
+    .then(res => {
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        handleLogin(email);
+        history.push('/');
+      }
+    })
+    // Catch при вызове функции в Login
+  }
+
+  function onSignOut() {
+    localStorage.removeItem('token');
+    history.push('/sign-in');
+    setEmail('');
+  }
+
   return (
-    <AppContext.Provider value={{loggedIn: loggedIn, handleLogin: handleLogin}}>
+    <AppContext.Provider value={loggedIn}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
-          <Header />
+          <Header onSignOut={onSignOut} email={email} />
           <Switch>
             <ProtectedRoute
               exact
@@ -179,10 +206,10 @@ function App() {
               onCardClick={handleCardClick}
             />
             <Route exact path='/sign-in'>
-              <Login />
+              <Login onLogin={onLogin}/>
             </Route>
             <Route exact path='/sign-up'>
-              <Register />
+              <Register onRegister={onRegister}/>
             </Route>
             <Route exact path="/">
               {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />}

@@ -3,14 +3,11 @@ import { Route, Redirect } from "react-router-dom";
 import { AppContext } from "./AppContext";
 
 const ProtectedRoute = ({ component: Component, ...props }) => {
-  const loginContext = React.useContext(AppContext);
-  console.log(loginContext);
-  console.log(props.loggedIn);
+  const loggedIn = React.useContext(AppContext);
   return (
     <Route>
-      {() => {
-          return loginContext.loggedIn ? <Component {...props} /> : <Redirect to="./sign-in" />
-        }
+      {() =>
+          loggedIn ? <Component {...props} /> : <Redirect to="./sign-in" />
       }
     </Route>
   );

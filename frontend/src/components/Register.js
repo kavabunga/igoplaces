@@ -1,14 +1,12 @@
 import React from "react";
-import { Link, useHistory } from 'react-router-dom';
-import * as auth from './Auth';
-import PopupWithForm from "./PopupWithForm";
+import { Link } from 'react-router-dom';
 
-export default function Register() {
+
+export default function Register({ onRegister }) {
   const [data, setData] = React.useState({
     email: '',
     password: ''
   });
-  const history = useHistory();
 
   function handleChangeInput(e) {
     const {name, value} = e.target;
@@ -20,14 +18,7 @@ export default function Register() {
   function handleSubmit(e){
     e.preventDefault()
     let { email, password } = data;
-    auth.register(email, password)
-    .then(res => {
-      if(res.statusCode !== 400){
-        history.push('/sign-in');
-      } else {
-        console.log('Авторизация не удалась')
-      }
-    });
+    onRegister(email, password);
   };
 
   return (

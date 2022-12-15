@@ -1,15 +1,10 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import * as auth from './Auth';
-import { AppContext } from './AppContext';
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const [data, setData] = React.useState({
     email: '',
     password: ''
   });
-  const loginContext = React.useContext(AppContext);
-  const history = useHistory();
 
   function handleChangeInput(e) {
     const {name, value} = e.target;
@@ -24,19 +19,16 @@ export default function Login() {
     if (!email || !password) {
         return;
     }
-    auth.authorize(email, password)
+    onLogin(email, password)
     .then(res => {
-      if (res.token) {
-        setData({
-          email: '',
-          password: ''
-        });
-        localStorage.setItem('token', res.token);
-        loginContext.handleLogin(res.email);
-        history.push('/');
-      }
+      setData({
+        email: '',
+        password: ''
+      });
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      console.log(err)
+    );
   };
 
   return (
