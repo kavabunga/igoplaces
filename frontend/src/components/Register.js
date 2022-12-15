@@ -3,8 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import * as auth from './Auth';
 import PopupWithForm from "./PopupWithForm";
 
-export default function Register(props) {
-  const [formData, setFormData] = React.useState({
+export default function Register() {
+  const [data, setData] = React.useState({
     email: '',
     password: ''
   });
@@ -12,36 +12,41 @@ export default function Register(props) {
 
   function handleChangeInput(e) {
     const {name, value} = e.target;
-    setFormData({
-      ...formData,
+    setData({
+      ...data,
       [name]: value
     });
   }
   function handleSubmit(e){
     e.preventDefault()
-    const { email, password } = formData;
+    let { email, password } = data;
     auth.register(email, password)
-      .then((res) => {
-        if(res){
-          history.push('/sign-in');
-        } else {
-          console.log('Авторизация не удалась')
-        }
-      });
+    .then(res => {
+      if(res.statusCode !== 400){
+        history.push('/sign-in');
+      } else {
+        console.log('Авторизация не удалась')
+      }
+    });
   };
 
   return (
-    <PopupWithForm name='edit-profile' title='Редактировать профиль' button='Сохранить' isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
-      <fieldset className="form__fieldset">
-        <label>
-          <input type="text" className="form__input form__input_name_name" name="name" placeholder="Имя" required minLength="2" maxLength="40" value={user.name} onChange={handleChangeInput} />
-          <span className="form__input-error input-name-error" />
-        </label>
-        <label>
-          <input type="text" className="form__input form__input_name_about" name="about" placeholder="Профессия" required minLength="2" maxLength="200" value={user.about} onChange={handleChangeInput} />
-          <span className="form__input-error input-about-error" />
-        </label>
-      </fieldset>
-    </PopupWithForm>
+    <div>
+      <h2 className="login__title">Регистрация</h2>
+      <form className='form form_type_login' name="form" onSubmit={handleSubmit} noValidate>
+        <fieldset className="form__fieldset">
+          <label>
+            <input type="email" className="form__input form__input_name_email" name="email" placeholder="Email" required minLength="2" maxLength="40" value={data.email} onChange={handleChangeInput} />
+            <span className="form__input-error input-email-error" />
+          </label>
+          <label>
+            <input type="password" className="form__input form__input_name_password" name="password" placeholder="Пароль" required minLength="2" maxLength="40" value={data.password} onChange={handleChangeInput} />
+            <span className="form__input-error input-password-error" />
+          </label>
+        </fieldset>
+      <button type="submit" className="form__submit-button">Зарегистрироваться</button>
+      </form>
+      <p>Уже зарегистрированы? Войти</p>
+    </div>
   )
 }

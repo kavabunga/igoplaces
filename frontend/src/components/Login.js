@@ -2,10 +2,9 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import * as auth from './Auth';
 import { AppContext } from './AppContext';
-import PopupWithForm from "./PopupWithForm";
 
-export default function Login(props) {
-  const [formData, setFormData] = React.useState({
+export default function Login() {
+  const [data, setData] = React.useState({
     email: '',
     password: ''
   });
@@ -14,30 +13,50 @@ export default function Login(props) {
 
   function handleChangeInput(e) {
     const {name, value} = e.target;
-    setFormData({
-      ...formData,
+    setData({
+      ...data,
       [name]: value
     });
   }
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault()
-    const { email, password } = formData;
+    const { email, password } = data;
     if (!email || !password) {
         return;
     }
     auth.authorize(email, password)
-    .then((data) => {
-      if (data.token){
-        setFormData({
+    .then(res => {
+      if (res.token) {
+        setData({
           email: '',
           password: ''
         });
-        loginContext.handleLogin();
+        localStorage.setItem('token', res.token);
+        loginContext.handleLogin(res.email);
         history.push('/');
       }
     })
     .catch(err => console.log(err));
   };
 
-  return
+  return (
+    <div>
+      <h2 className="login__title">Вход</h2>
+      <form className='form form_type_login' name="form" onSubmit={handleSubmit} noValidate>
+        <fieldset className="form__fieldset">
+          <label>
+            <input type="email" className="form__input form__input_name_email" name="email" placeholder="Email" required minLength="2" maxLength="40" value={data.email} onChange={handleChangeInput} />
+            <span className="form__input-error input-email-error" />
+          </label>
+          <label>
+            <input type="password" className="form__input form__input_name_password" name="password" placeholder="Пароль" required minLength="2" maxLength="40" value={data.password} onChange={handleChangeInput} />
+            <span className="form__input-error input-password-error" />
+          </label>
+        </fieldset>
+      <button type="submit" className="form__submit-button">Войти</button>
+      </form>
+    </div>
+  )
 }
+
+
