@@ -39,51 +39,27 @@ module.exports.createUser = async function (req, res) {
   }
 };
 
-// module.exports.updateUser = async function (req, res) {
-//   try {
-//     const owner = req.user._id;
-//     const { name, about } = req.body;
-//     const user = await User.findByIdAndUpdate(
-//       owner,
-//       { name, about },
-//       {
-//         new: true,
-//         runValidators: true,
-//       },
-//     );
-//     if (!user) {
-//       const err = new Error(`Запрошенный пользователь с _id:${owner} не найден`);
-//       err.name = 'DocumentNotFound';
-//       throw err;
-//     }
-//     res.send({ data: user });
-//   } catch (err) {
-//     errorHandler(err, res);
-//   }
-// };
-
-module.exports.updateUser = (req, res) => {
-  const owner = req.user._id;
-  const { name, about } = req.body;
-  User.findByIdAndUpdate(
-    owner,
-    { name, about },
-    {
-      new: true,
-      runValidators: true,
-    },
-  )
-    .then((user) => {
-      if (!user) {
-        const err = new Error(`Запрошенный пользователь с _id:${owner} не найден`);
-        err.name = 'DocumentNotFound';
-        throw err;
-      }
-      res.send({ data: user });
-    })
-    .catch((err) => {
-      errorHandler(err, res);
-    });
+module.exports.updateUser = async function (req, res) {
+  try {
+    const owner = req.user._id;
+    const { name, about } = req.body;
+    const user = await User.findByIdAndUpdate(
+      owner,
+      { name, about },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+    if (!user) {
+      const err = new Error(`Запрошенный пользователь с _id:${owner} не найден`);
+      err.name = 'DocumentNotFound';
+      throw err;
+    }
+    res.send({ data: user });
+  } catch (err) {
+    errorHandler(err, res);
+  }
 };
 
 module.exports.updateAvatar = async function (req, res) {
