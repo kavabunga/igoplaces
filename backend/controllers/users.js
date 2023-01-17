@@ -4,11 +4,6 @@ const errorHandler = require('../util/errorHandler');
 module.exports.getUsers = async function (req, res) {
   try {
     const users = await User.find({});
-    if (!users) {
-      const err = new Error('Запрошенные пользователи не найдены');
-      err.name = 'DocumentNotFound';
-      throw err;
-    }
     res.send({ data: users });
   } catch (err) {
     errorHandler(err, res);
@@ -71,6 +66,7 @@ module.exports.updateAvatar = async function (req, res) {
       { avatar },
       {
         new: true,
+        runValidators: true,
       },
     );
     if (!user) {

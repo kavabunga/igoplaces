@@ -4,11 +4,6 @@ const errorHandler = require('../util/errorHandler');
 module.exports.getCards = async function (req, res) {
   try {
     const cards = await Card.find({});
-    if (!cards) {
-      const err = new Error('Запрошенные карточки не найдены');
-      err.name = 'DocumentNotFound';
-      throw err;
-    }
     res.send({ data: cards });
   } catch (err) {
     errorHandler(err, res);
