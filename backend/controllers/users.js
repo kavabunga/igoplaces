@@ -1,11 +1,43 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const errorHandler = require('../util/errorHandler');
+
+module.exports.login = (req, res) => {
+  const { email, password } = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((_id) => {
+      const token = jwt.sign({ _id }, 'some-secret-key', { expiresIn: '7d' });
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+        })
+        .end();
+    })
+    .catch((err) => {
+      errorHandler(err, res);
+    });
+};
 
 module.exports.getUsers = async function (req, res) {
   try {
     const users = await User.find({});
     res.send({ data: users });
+  } catch (err) {
+    errorHandler(err, res);
+  }
+};
+
+module.exports.getUser = async function (req, res) {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      const err = new Error(`Запрошенный пользователь с _id:${req.user._id} не найден`);
+      err.name = 'DocumentNotFound';
+      throw err;
+    }
+    res.send({ data: user });
   } catch (err) {
     errorHandler(err, res);
   }

@@ -21,14 +21,35 @@ module.exports.createCard = async function (req, res) {
   }
 };
 
+// module.exports.deleteCardById = async function (req, res) {
+//   try {
+//     const card = await Card.findByIdAndRemove(req.params.cardId);
+//     if (!card) {
+//       const err = new Error(`Запрошенная карточка с id:${req.params.cardId} не найдена`);
+//       err.name = 'DocumentNotFound';
+//       throw err;
+//     }
+//     res.send({ data: card });
+//   } catch (err) {
+//     errorHandler(err, res);
+//   }
+// };
+
 module.exports.deleteCardById = async function (req, res) {
   try {
-    const card = await Card.findByIdAndRemove(req.params.cardId);
+    const owner = req.user._id;
+    const card = await Card.findById(req.params.cardId);
     if (!card) {
       const err = new Error(`Запрошенная карточка с id:${req.params.cardId} не найдена`);
       err.name = 'DocumentNotFound';
       throw err;
     }
+    if (card.owner !== owner) {
+      const err = new Error('Нет прав на удаление карточки');
+      err.name = 'DocumentNotFound';
+      throw err;
+    }
+    await card.remove();
     res.send({ data: card });
   } catch (err) {
     errorHandler(err, res);
