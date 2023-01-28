@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const errorRouter = require('./routes/errors');
@@ -23,6 +24,14 @@ app.use((req, res, next) => {
 app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
 app.use('*', errorRouter);
+
+// обработчики ошибок
+app.use(errors()); // обработчик ошибок celebrate
+
+// централизованный обработчик
+app.use((err, req, res, next) => {
+  // ...
+});
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
