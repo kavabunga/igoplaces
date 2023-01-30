@@ -1,4 +1,4 @@
-const { isCelebrateError } = require('celebrate');
+// const { isCelebrateError } = require('celebrate');
 const mongoose = require('mongoose');
 const HttpError = require('../errors/HttpError');
 const { errorCodes } = require('../util/constants.ts');
