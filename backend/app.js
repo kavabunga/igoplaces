@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 const { validateCredentials } = require('./middlewares/requestValidation');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
@@ -25,6 +26,7 @@ app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
 app.use('*', wrongRouteHandler);
 
+app.use(errors());
 app.use(errorHandler);
 
 mongoose.connect('mongodb://localhost:27017/mestodb');

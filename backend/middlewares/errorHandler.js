@@ -8,10 +8,10 @@ module.exports.errorHandler = (err, req, res, next) => {
     res.status(errorCodes.HTTP_CONFLICT).send({ message: 'Пользователь с таким email уже зарегистрирован' });
     return;
   }
-  if (isCelebrateError(err)) {
-    res.status(errorCodes.HTTP_BAD_REQUEST).send({ message: 'Переданы некорректные данные' });
-    return;
-  }
+  // if (isCelebrateError(err)) {
+  //   res.status(errorCodes.HTTP_BAD_REQUEST).send({ message: 'Переданы некорректные данные' });
+  //   return;
+  // }
   if (err instanceof HttpError) {
     res.status(err.statusCode).send({ message: err.message });
     return;
