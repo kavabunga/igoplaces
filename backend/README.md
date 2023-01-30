@@ -1,30 +1,39 @@
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
 
-# Проект Mesto фронтенд + бэкенд
+# Mesto (back-end)
 
-Серверная часть для сайта с фотографиями разных мест — MESTO. Учебный проект курса веб-разработки в Яндекс.Практикуме.
+Server-side for the project **"Mesto"** — web-application for sharing pictures of defferent places.
 
-## Технологии в проекте
+## Technology
 
-- **Node.js**
-- **Express**
-- **MongoDB**
+- [**Node.js**](https://nodejs.org/en/)
+- [**Express.js**](https://expressjs.com)
+- [**MongoDB**](https://www.mongodb.com) + [**Mongoose.js**](https://mongoosejs.com)
 
-## Структура и инструкции
+## Features
 
-### Директории
+- user authorization (signup, signin, authentication via **JWT**);
+- editing user profile data;
+- posting and editing cards;
+- liking cards;
+- server requests validation (via **Celebrate** library);
+- database entries validation (via **Mongoose** scheme validators).
 
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки  
-`/models` — папка с файлами описания схем пользователя и карточки  
-`/errors` — папка с файлами кастомных ошибок  
-`/util` — папка с файлами вспомогательных функций
+## Structure
 
-### Запуск проекта
+### Directories:
 
-`npm run start` — запускает сервер  
-`npm run dev` — запускает сервер с hot-reload
+`/routes` — request routers  
+`/controllers` — request controllers for interactions with **users** and **cards** databases  
+`/models` — database schemes for **users** and **cards** databases  
+`/errors` — custom error classes  
+`/util` — helper functions and constants
 
-## Адрес репозитория
+### Server launch:
 
-Проект доступен на GitHub по адресу: [https://github.com/kavabunga/express-mesto-gha](https://github.com/kavabunga/express-mesto-gha)
+`npm run start` — run server  
+`npm run dev` — run server in development mode with **hot-reload** enabled
+
+## Repo address
+
+Project is available on GitHub: [https://github.com/kavabunga/express-mesto-gha](https://github.com/kavabunga/express-mesto-gha)

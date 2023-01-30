@@ -1,95 +1,74 @@
 const Card = require('../models/card');
-const errorHandler = require('../util/errorHandler');
+const DocumentNotFoundError = require('../errors/DocumentNotFoundError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
-module.exports.getCards = async function (req, res) {
+module.exports.getCards = async function (req, res, next) {
   try {
     const cards = await Card.find({});
     res.send({ data: cards });
   } catch (err) {
-    errorHandler(err, res);
+    next(err);
   }
 };
 
-module.exports.createCard = async function (req, res) {
+module.exports.createCard = async function (req, res, next) {
   try {
     const owner = req.user._id;
     const { name, link } = req.body;
     const card = await Card.create({ name, link, owner });
     res.send({ data: card });
   } catch (err) {
-    errorHandler(err, res);
+    next(err);
   }
 };
 
-// module.exports.deleteCardById = async function (req, res) {
-//   try {
-//     const card = await Card.findByIdAndRemove(req.params.cardId);
-//     if (!card) {
-//       const err = new Error(`Запрошенная карточка с id:${req.params.cardId} не найдена`);
-//       err.name = 'DocumentNotFound';
-//       throw err;
-//     }
-//     res.send({ data: card });
-//   } catch (err) {
-//     errorHandler(err, res);
-//   }
-// };
-
-module.exports.deleteCardById = async function (req, res) {
+module.exports.deleteCardById = async function (req, res, next) {
   try {
     const owner = req.user._id;
-    const card = await Card.findById(req.params.cardId);
+    const card = await Card.findById(req.params.id);
     if (!card) {
-      const err = new Error(`Запрошенная карточка с id:${req.params.cardId} не найдена`);
-      err.name = 'DocumentNotFound';
-      throw err;
+      throw new DocumentNotFoundError(`Запрошенная карточка с id:${req.params.id} не найдена`);
     }
-    if (card.owner !== owner) {
-      const err = new Error('Нет прав на удаление карточки');
-      err.name = 'DocumentNotFound';
-      throw err;
+    if (card.owner.toString() !== owner) {
+      throw new ForbiddenError('Нет прав на удаление карточки');
     }
     await card.remove();
     res.send({ data: card });
   } catch (err) {
-    errorHandler(err, res);
+    next(err);
   }
 };
 
-module.exports.addLikeCard = async function (req, res) {
+module.exports.addLikeCard = async function (req, res, next) {
   try {
     const owner = req.user._id;
     const card = await Card.findByIdAndUpdate(
-      req.params.cardId,
+      req.params.id,
       { $addToSet: { likes: owner } },
       { new: true },
     );
     if (!card) {
-      const err = new Error(`Запрошенная карточка с id:${req.params.cardId} не найдена`);
-      err.name = 'DocumentNotFound';
-      throw err;
+      throw new DocumentNotFoundError(`Запрошенная карточка с id:${req.params.id} не найдена`);
     }
     res.send({ data: card });
   } catch (err) {
-    errorHandler(err, res);
+    next(err);
   }
 };
 
-module.exports.deleteLikeCard = async function (req, res) {
+module.exports.deleteLikeCard = async function (req, res, next) {
   try {
     const owner = req.user._id;
     const card = await Card.findByIdAndUpdate(
-      req.params.cardId,
+      req.params.id,
       { $pull: { likes: owner } },
       { new: true },
     );
     if (!card) {
-      const err = new Error(`Запрошенная карточка с id:${req.params.cardId} не найдена`);
-      err.name = 'DocumentNotFound';
-      throw err;
+      throw new DocumentNotFoundError(`Запрошенная карточка с id:${req.params.id} не найдена`);
     }
     res.send({ data: card });
   } catch (err) {
-    errorHandler(err, res);
+    next(err);
   }
 };
