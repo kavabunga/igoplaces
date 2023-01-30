@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const { validateCredentials } = require('./middlewares/requestValidation');
+const { validateUser, validateUserCredentials } = require('./middlewares/requestValidation');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const wrongRouteHandler = require('./middlewares/wrongRouteHandler');
@@ -17,8 +17,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.post('/signin', validateCredentials, login);
-app.post('/signup', validateCredentials, createUser);
+app.post('/signin', validateUserCredentials, login);
+app.post('/signup', validateUser, createUser);
 
 app.use(auth);
 

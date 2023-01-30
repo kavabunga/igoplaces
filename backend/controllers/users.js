@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const DocumentNotFoundError = require('../errors/DocumentNotFoundError');
+const { errorCodes } = require('../util/constants.ts');
 
 module.exports.login = async function (req, res, next) {
   try {
@@ -71,6 +72,10 @@ module.exports.createUser = async function (req, res, next) {
       },
     });
   } catch (err) {
+    if (err.code === 11000) {
+      res.status(errorCodes.HTTP_CONFLICT).send({ message: 'Пользователь с таким email уже зарегистрирован' });
+      return;
+    }
     next(err);
   }
 };
