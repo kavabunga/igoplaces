@@ -30,9 +30,3 @@ module.exports.validateId = celebrate({
     id: Joi.string().hex().required(),
   }).unknown(true),
 });
-
-module.exports.validateJWT = celebrate({
-  cookies: Joi.object().keys({
-    jwt: Joi.string().required(),
-  }).unknown(true),
-});

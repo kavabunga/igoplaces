@@ -5,6 +5,9 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
+    if (!req.cookies.jwt) {
+      throw new UnauthorizedError('Необходима авторизация. Не передан токен');
+    }
     const token = req.cookies.jwt;
     payload = jwt.verify(token, 'some-secret-key', (err, decoded) => {
       if (err) {

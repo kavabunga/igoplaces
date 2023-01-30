@@ -5,15 +5,20 @@ const DocumentNotFoundError = require('../errors/DocumentNotFoundError');
 
 module.exports.login = async function (req, res, next) {
   try {
-    const { email, password } = req.body;
-    const _id = await User.findUserByCredentials(email, password);
+    const {
+      name, about, avatar, email, _id,
+    } = await User.findUserByCredentials(req.body.email, req.body.password);
     const token = jwt.sign({ _id }, 'some-secret-key', { expiresIn: '7d' });
     res
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
       })
-      .end();
+      .send({
+        data: {
+          name, about, avatar, email, _id,
+        },
+      });
   } catch (err) {
     next(err);
   }
@@ -54,15 +59,17 @@ module.exports.getUserById = async function (req, res, next) {
 
 module.exports.createUser = async function (req, res, next) {
   try {
+    const hash = await bcrypt.hash(req.body.password, 10);
+    req.body.password = hash;
+    const user = await User.create(req.body);
     const {
-      name, about, avatar, email, password,
-    } = req.body;
-    const hash = await bcrypt.hash(password, 10);
-    const user = await User.create({
-      name, about, avatar, email, password: hash,
+      name, about, avatar, email, _id,
+    } = user;
+    res.send({
+      data: {
+        name, about, avatar, email, _id,
+      },
     });
-    user.password = '********';
-    res.send({ data: user });
   } catch (err) {
     next(err);
   }

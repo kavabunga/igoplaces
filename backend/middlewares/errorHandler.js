@@ -25,4 +25,5 @@ module.exports.errorHandler = (err, req, res, next) => {
     return;
   }
   res.status(errorCodes.HTTP_DEFAULT_ERROR).send({ message: 'Ошибка по-умолчанию' });
+  next();
 };

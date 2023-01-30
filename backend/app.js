@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { validateCredentials, validateJWT } = require('./middlewares/requestValidation');
+const { validateCredentials } = require('./middlewares/requestValidation');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const wrongRouteHandler = require('./middlewares/wrongRouteHandler');
@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.post('/signin', validateCredentials, login);
 app.post('/signup', validateCredentials, createUser);
 
-app.use(validateJWT, auth);
+app.use(auth);
 
 app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
