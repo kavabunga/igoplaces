@@ -40,7 +40,7 @@ Server-side for the project **"Mesto"** — web-application for sharing pictures
 ### Sign up
 
 ```js
-POST / signup;
+POST /signup
 ```
 
 Request body:
@@ -58,7 +58,7 @@ Request body:
 ### Sign in
 
 ```js
-POST / signin;
+POST /signin
 ```
 
 Request body:
@@ -73,7 +73,7 @@ Request body:
 ### Update user data
 
 ```js
-PATCH / users / me;
+PATCH /users/me
 ```
 
 Request body:
@@ -88,7 +88,7 @@ Request body:
 ### Update user avatar
 
 ```js
-PATCH / users / me / avatar;
+PATCH /users/me/avatar
 ```
 
 Request body:
@@ -102,7 +102,7 @@ Request body:
 ### Get users data
 
 ```js
-GET / users;
+GET /users
 ```
 
 Request body empty
@@ -110,7 +110,7 @@ Request body empty
 ### Get current user data
 
 ```js
-GET / users / me;
+GET /users/me
 ```
 
 ### Get user data bu user Id
@@ -124,7 +124,7 @@ Request body empty
 ### Get cards
 
 ```js
-GET / cards;
+GET /cards
 ```
 
 Request body empty
@@ -140,7 +140,7 @@ Request body empty
 ### Post new card
 
 ```js
-POST / cards;
+POST /cards
 ```
 
 Request body:
