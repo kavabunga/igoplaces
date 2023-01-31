@@ -1,6 +1,6 @@
 # :mount_fuji: Mesto (back-end)
 
-Server-side for the project **Mesto** — web-application for sharing pictures of defferent places. The project made at "WEB-development" course at [Yandex.Practicum](https://practicum.yandex.ru/ "Yandex.Practicum").
+Server-side for the project **Mesto** — web-application for sharing pictures of different places. The project made at "WEB-development" course at [Yandex.Practicum](https://practicum.yandex.ru/ "Yandex.Practicum").
 
 ## Technology
 
