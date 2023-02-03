@@ -37,151 +37,21 @@ Server-side for the project **Mesto** — web-application for sharing pictures o
 
 :warning: Section in progress.
 
-### Sign up
-
-```js
-POST /signup
-```
-
-Request body:
-
-```json
-{
-  "email": "foo@bar.com", // required
-  "password": "foo", // required
-  "name": "bar",
-  "about": "bar",
-  "avatar": "https://foo.com/bar.bmp"
-}
-```
-
-### Sign in
-
-```js
-POST /signin
-```
-
-Request body:
-
-```json
-{
-  "email": "foo@bar.com", // required
-  "password": "foo" // required
-}
-```
-
-### Update user data
-
-```js
-PATCH /users/me
-```
-
-Request body:
-
-```json
-{
-  "name": "foo", // required
-  "about": "bar" // required
-}
-```
-
-### Update user avatar
-
-```js
-PATCH /users/me/avatar
-```
-
-Request body:
-
-```json
-{
-  "avatar": "https://foo.com/bar.bmp" // required
-}
-```
-
-### Get users data
-
-```js
-GET /users
-```
-
-Request body empty
-
-### Get current user data
-
-```js
-GET /users/me
-```
-
-### Get user data bu user Id
-
-```js
-GET /users/${userId}
-```
-
-Request body empty
-
-### Get cards
-
-```js
-GET /cards
-```
-
-Request body empty
-
-### Get card by card Id
-
-```js
-GET /cards/${cardId}
-```
-
-Request body empty
-
-### Post new card
-
-```js
-POST /cards
-```
-
-Request body:
-
-```json
-{
-  "name": "foo", // required
-  "link": "https://foo.com/bar.bmp" // required
-}
-```
-
-### Delete card by card Id
-
-```js
-DELETE /cards/${cardId}
-```
-
-Request body:
-
-```json
-{
-  "name": "foo", // required
-  "link": "https://foo.com/bar.bmp" // required
-}
-```
-
-### Add like to a card by card Id
-
-```js
-PUT /cards/${cardId}/likes
-```
-
-Request body empty
-
-### Delete like from a card by card Id
-
-```js
-DELETE /cards/${cardId}/likes
-```
-
-Request body empty
+| API Endpoint             | HTTP Method | Request Body                                                                                                      |
+| ------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------- |
+| `/signup`                | `POST`      | { "email": "foo@bar.com", "password": "foo", "name": "bar", "about": "bar", "avatar": "https://foo.com/bar.bmp" } |
+| `/signin`                | `POST`      | { "email": "foo@bar.com", "password": "foo" }                                                                     |
+| `/users/me`              | `PATCH`     | { "name": "foo", "about": "bar" }                                                                                 |
+| `/users/me/avatar`       | `PATCH`     | { "avatar": "https://foo.com/bar.bmp" }                                                                           |
+| `/users`                 | `GET`       |                                                                                                                   |
+| `/users/me`              | `GET`       |                                                                                                                   |
+| `/users/${userId}`       | `GET`       |                                                                                                                   |
+| `/cards`                 | `GET`       |                                                                                                                   |
+| `/cards/${cardId}`       | `GET`       |                                                                                                                   |
+| `/cards`                 | `POST`      | { "name": "foo", "link": "https://foo.com/bar.bmp" }                                                              |
+| `/cards/${cardId}`       | `DELETE`    |                                                                                                                   |
+| `/cards/${cardId}/likes` | `PUT`       |                                                                                                                   |
+| `/cards/${cardId}/likes` | `DELETE`    |                                                                                                                   |
 
 ## Repo address
 
