@@ -1,0 +1,9 @@
+.auth__button {
+  margin-top: 125px;
+}
+
+@media screen and (min-width: 720px) {
+  .auth__button {
+    margin-top: 168px;
+  }
+}

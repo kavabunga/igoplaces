@@ -1,0 +1,15 @@
+.tooltip__image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  padding: 0;
+  margin: 16px auto 40px;
+}
+
+@media screen and (min-width: 720px) {
+  .tooltip__image {
+    margin: 26px auto 32px;
+  }
+}

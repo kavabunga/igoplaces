@@ -1,0 +1,10 @@
+.page__element {
+  max-width: 880px;
+}
+
+@media screen and (min-width: 720px) {
+  .page__element {
+    margin: auto;
+    width: 80%;
+  }
+}
