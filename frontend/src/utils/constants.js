@@ -39,8 +39,8 @@ const validationConfig = {
   inputErrorClass: 'form__input_type_error',
 };
 
-const serverUrl = 'https://mesto.nomoreparties.co/v1/cohort-52';
-const serverToken = 'fffac5cb-2beb-4c6d-b998-0bdeed4853fd';
+const serverUrl = 'https://api.nostromo.nomoredomainsclub.ru';
+// const serverToken = 'fffac5cb-2beb-4c6d-b998-0bdeed4853fd';
 
 export {
   nameElementSelector,
@@ -66,6 +66,5 @@ export {
   popupToggleClass,
   postTemplate,
   validationConfig,
-  serverUrl,
-  serverToken
+  serverUrl
 };

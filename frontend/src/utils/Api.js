@@ -1,6 +1,6 @@
 import {
   serverUrl,
-  serverToken
+  // serverToken
 } from '../utils/constants';
 
 class Api {
@@ -10,6 +10,7 @@ class Api {
   }
 
   _fetchRequest(url, options) {
+    options.credentials = 'include';
     return fetch(url, options )
     .then(res => {
       if (res.ok) {
@@ -80,7 +81,7 @@ class Api {
 const api = new Api({
   baseUrl: serverUrl,
   headers: {
-    authorization: serverToken,
+    // authorization: serverToken,
     'Content-Type': 'application/json'
   }
 });
