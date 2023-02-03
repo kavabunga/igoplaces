@@ -4,12 +4,14 @@ const User = require('../models/user');
 const DocumentNotFoundError = require('../errors/DocumentNotFoundError');
 const { errorCodes } = require('../util/constants.ts');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 module.exports.login = async function (req, res, next) {
   try {
     const {
       name, about, avatar, email, _id,
     } = await User.findUserByCredentials(req.body.email, req.body.password);
-    const token = jwt.sign({ _id }, 'some-secret-key', { expiresIn: '7d' });
+    const token = jwt.sign({ _id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
     res
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
