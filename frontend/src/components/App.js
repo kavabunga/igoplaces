@@ -20,9 +20,10 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({
     name: '',
     about: '',
-    avatar: ''
+    avatar: '',
+    email: ''
   });
-  const [email, setEmail] = React.useState('');
+  // const [email, setEmail] = React.useState('');
   const [isRegistrationSuccess, setIsRegistrationSuccess] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -47,8 +48,14 @@ function App() {
   }
 
   React.useEffect(() => {
-    tokenCheck()
-  }, [])
+    try {
+      getData();
+      history.push('/');
+    } catch (err) {
+      history.push('/sign-in');
+      console.log(err)
+    }
+  }, [history])
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -136,32 +143,32 @@ function App() {
       })
   }
 
-  function handleLogin(email) {
+  function handleLogin() {
     setLoggedIn(true);
-    setEmail(email);
+    // setEmail(email);
     getData();
   }
 
-  function tokenCheck() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      auth.getContent(token)
-        .then(res => {
-          if (res) {
-            handleLogin(res.data.email);
-            history.push('/');
-          }
-        })
-        .catch(err =>
-          console.log(err)
-        );
-    }
-  }
+  // function tokenCheck() {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     auth.getContent(token)
+  //       .then(res => {
+  //         if (res) {
+  //           handleLogin(res.data.email);
+  //           history.push('/');
+  //         }
+  //       })
+  //       .catch(err =>
+  //         console.log(err)
+  //       );
+  //   }
+  // }
 
   function onRegister(email, password) {
     return auth.register(email, password)
       .then(res => {
-        if (res.statusCode !== 400) {
+        if (res.statusCode === 200) {
           setIsRegistrationSuccess(true);
           history.push('/sign-in');
         }
@@ -178,8 +185,7 @@ function App() {
   function onLogin(email, password) {
     return auth.authorize(email, password)
       .then(res => {
-        if (res.token) {
-          localStorage.setItem('token', res.token);
+        if (res.statusCode === 200) {
           handleLogin(email);
           history.push('/');
         }
@@ -192,16 +198,21 @@ function App() {
   }
 
   function onSignOut() {
-    localStorage.removeItem('token');
+    // добавить запрос на удаление токена сервером
     history.push('/sign-in');
-    setEmail('');
+    setCurrentUser({
+      name: '',
+      about: '',
+      avatar: '',
+      email: ''
+    });
   }
 
   return (
     <AppContext.Provider value={loggedIn}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
-          <Header onSignOut={onSignOut} email={email} />
+          <Header onSignOut={onSignOut} email={currentUser.email} />
           <Switch>
             <ProtectedRoute
               exact

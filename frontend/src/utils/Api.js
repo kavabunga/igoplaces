@@ -1,7 +1,7 @@
 import {
   serverUrl,
   // serverToken
-} from '../utils/constants';
+} from '../utils/constants.ts';
 
 class Api {
   constructor({baseUrl, headers}) {

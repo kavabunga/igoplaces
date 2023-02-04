@@ -40,7 +40,7 @@ const validationConfig = {
 };
 
 const serverUrl = 'https://api.nostromo.nomoredomainsclub.ru';
-// const serverToken = 'fffac5cb-2beb-4c6d-b998-0bdeed4853fd';
+const authUrl = 'https://api.nostromo.nomoredomainsclub.ru';
 
 export {
   nameElementSelector,
@@ -66,5 +66,6 @@ export {
   popupToggleClass,
   postTemplate,
   validationConfig,
-  serverUrl
+  serverUrl,
+  authUrl
 };
