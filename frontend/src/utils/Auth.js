@@ -1,3 +1,4 @@
+// import auth from '../../../backend/middlewares/auth';
 import {
   authUrl,
   // serverToken
@@ -32,6 +33,19 @@ export function authorize(email, password) {
       res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
     )
 };
+
+export function logout() {
+  return fetch(`${authUrl}/users/me/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  })
+    .then(res =>
+      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    )
+}
 
 // export function getContent(token) {
 //   return fetch(`${authUrl}/users/me`, {

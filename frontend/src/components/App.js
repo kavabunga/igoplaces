@@ -198,7 +198,7 @@ function App() {
   }
 
   function onSignOut() {
-    // добавить запрос на удаление токена сервером
+    auth.logout();
     history.push('/sign-in');
     setCurrentUser({
       name: '',

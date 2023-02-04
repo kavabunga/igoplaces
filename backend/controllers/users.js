@@ -16,12 +16,23 @@ module.exports.login = async function (req, res, next) {
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
+        sameSite: true,
       })
       .send({
         data: {
           name, about, avatar, email, _id,
         },
       });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.logout = (req, res, next) => {
+  try {
+    res.status(200).clearCookie('jwt').send({
+      message: 'Выход выполнен',
+    });
   } catch (err) {
     next(err);
   }
