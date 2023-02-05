@@ -18,6 +18,9 @@ module.exports.login = async function (req, res, next) {
         httpOnly: true,
         sameSite: true,
       })
+      .cookie('authorized', true, {
+        maxAge: 3600000 * 24 * 7,
+      })
       .send({
         data: {
           name, about, avatar, email, _id,
@@ -30,7 +33,7 @@ module.exports.login = async function (req, res, next) {
 
 module.exports.logout = (req, res, next) => {
   try {
-    res.status(200).clearCookie('jwt').send({
+    res.status(200).clearCookie('jwt').clearCookie('authorized').send({
       message: 'Выход выполнен',
     });
   } catch (err) {

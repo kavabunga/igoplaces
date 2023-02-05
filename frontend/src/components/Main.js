@@ -1,9 +1,9 @@
-import React from 'react';
-import {CurrentUserContext} from '../contexts/CurrentUserContext';
-import Card from './Card';
+import React from 'react'
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
+import Card from './Card'
 
-export default function Main({cards, onCardLike, onCardDelete, onEditProfile, onEditAvatar, onAddItem, onCardClick}) {
-  const currentUser = React.useContext(CurrentUserContext);
+export default function Main ({ cards, onCardLike, onCardDelete, onEditProfile, onEditAvatar, onAddItem, onCardClick }) {
+  const currentUser = React.useContext(CurrentUserContext)
 
   return (
     <main className="content page__element">
@@ -21,9 +21,11 @@ export default function Main({cards, onCardLike, onCardDelete, onEditProfile, on
       </section>
       <section className="section">
         <ul className="elements">
-          {cards.map((card) => (
+          {cards[0]
+            ? cards.map((card) => (
             <Card item={card} key={card._id} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
-          ))}
+            ))
+            : ''}
         </ul>
       </section>
     </main>

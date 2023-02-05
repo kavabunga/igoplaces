@@ -1,22 +1,22 @@
-import React from "react"
-import PopupWithForm from "./PopupWithForm"
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import React from 'react'
+import PopupWithForm from './PopupWithForm'
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
-export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const [user, setUser] = React.useState({name: '', about: ''})
+export default function EditProfilePopup ({ isOpen, onClose, onUpdateUser }) {
+  const currentUser = React.useContext(CurrentUserContext)
+  const [user, setUser] = React.useState({ name: '', about: '' })
 
   React.useEffect(() => {
-    setUser(currentUser);
-  }, [currentUser, isOpen]);
+    setUser(currentUser)
+  }, [currentUser, isOpen])
 
-  function handleChangeInput(e) {
-    setUser({...user, [e.target.name]: e.target.value});
+  function handleChangeInput (e) {
+    setUser({ ...user, [e.target.name]: e.target.value })
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onUpdateUser(user);
+  function handleSubmit (e) {
+    e.preventDefault()
+    onUpdateUser(user)
   }
 
   return (

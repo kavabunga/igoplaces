@@ -1,24 +1,23 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-
-export default function Register({ onRegister }) {
+export default function Register ({ onRegister }) {
   const [data, setData] = React.useState({
     email: '',
     password: ''
-  });
+  })
 
-  function handleChangeInput(e) {
-    const { name, value } = e.target;
+  function handleChangeInput (e) {
+    const { name, value } = e.target
     setData({
       ...data,
       [name]: value
-    });
+    })
   }
-  function handleSubmit(e) {
+  function handleSubmit (e) {
     e.preventDefault()
-    let { email, password } = data;
-    onRegister(email, password);
+    const { email, password } = data
+    onRegister(email, password)
   };
 
   return (

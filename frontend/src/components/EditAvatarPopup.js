@@ -1,18 +1,18 @@
-import React from "react"
-import PopupWithForm from "./PopupWithForm"
+import React from 'react'
+import PopupWithForm from './PopupWithForm'
 
-export default function EditAvatarPopup ({isOpen, onClose, onUpdateAvatar}) {
-  const avatarInputRef = React.useRef();
+export default function EditAvatarPopup ({ isOpen, onClose, onUpdateAvatar }) {
+  const avatarInputRef = React.useRef()
 
   React.useEffect(() => {
-    avatarInputRef.current.value = '';
-  }, [isOpen]);
+    avatarInputRef.current.value = ''
+  }, [isOpen])
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit (e) {
+    e.preventDefault()
     onUpdateAvatar({
-      avatar: avatarInputRef.current.value,
-    });
+      avatar: avatarInputRef.current.value
+    })
   }
 
   return (

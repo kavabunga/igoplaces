@@ -1,30 +1,30 @@
-import React from 'react';
+import React from 'react'
 
-export default function Login({ onLogin }) {
+export default function Login ({ onLogin }) {
   const [data, setData] = React.useState({
     email: '',
     password: ''
-  });
+  })
 
   React.useEffect(() => {
     setData({
       email: '',
       password: ''
-    });
+    })
   }, [])
 
-  function handleChangeInput(e) {
-    const { name, value } = e.target;
+  function handleChangeInput (e) {
+    const { name, value } = e.target
     setData({
       ...data,
       [name]: value
-    });
+    })
   }
-  function handleSubmit(e) {
+  function handleSubmit (e) {
     e.preventDefault()
-    const { email, password } = data;
+    const { email, password } = data
     if (!email || !password) {
-      return;
+      return
     }
     onLogin(email, password)
   };
@@ -50,5 +50,3 @@ export default function Login({ onLogin }) {
     </section>
   )
 }
-
-
