@@ -1,34 +1,25 @@
-# Проект: Место (React-версия)
+# :mount_fuji: Mesto (front-end) • ![Status in progress](https://badgen.net/badge/status/in%20progress/yellow)
 
-Сайт с фотографиями разных мест, созданный как учебный проект курса веб-разработки в Яндекс.Практикуме.
+Client-side for the project **Mesto** — web-application for sharing pictures of different places.
 
-## Пользователь может:
+## Technology
 
-* открывать и закрывать поп-апы для редактирования информации о себе и добавления новых карточек;
-* посмотреть полноэкранное превью для любой из карточек.
+- **HTML**
+- **CSS**
+- **JavaScript**
+- [**React.js**](https://reactjs.org "React.js")
 
-## Пользователь скоро сможет:
+## Features
 
-* дактировать данные и аватар профиля;
-* добавлять новые карточки с местами;
-* удалять карточки, добавленные ранее;
-* отмечать карточки сердечком.
+- responsive and adaptive layout;
+- user authorization;
+- editing user profile data;
+- posting and deleting cards with images;
+- liking cards;
+- popups for profile and avatar editing, adding new posts, large image previews.
 
-## Технологии в проекте
+## TODO
 
-* Языки: **HTML**, **CSS** и **JavaScript**
-* Реализация с использованием фреймворка [React](https://reactjs.org/) и инструмента [Create React App](https://github.com/facebook/create-react-app)
-* Страница адаптируется к различным размерам экранов
-* Разметка выполнена с использованием:
-  - [flexbox](https://www.doka.guide/css/flexbox-guide/ "Гайд по flexbox на Доке")
-  - [grid](https://www.doka.guide/css/grid-guide/ "Гайд по grid на Доке")
-* Стили по умолчанию обнуляются плагином [normalize.css](https://necolas.github.io/normalize.css/)
-* Данные хранятся на сервере. Отправка и получение данных реализованы с помощью запросов по API
-
-## Макет
-
-[Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
-
-## Адрес
-
-Проект доступен на GitHub Pages по адресу: [https://kavabunga.github.io/mesto-react/](https://kavabunga.github.io/mesto-react/)
+- add form validation;
+- add card delete confirmation via dedicated popup;
+- show server errors information inside info tooltip.

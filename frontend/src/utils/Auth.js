@@ -1,9 +1,6 @@
 import {
   authUrl
-  // serverToken
 } from './constants.ts'
-
-// export const BASE_URL = 'https://auth.nomoreparties.co';
 
 export function register (email, password) {
   return fetch(`${authUrl}/signup`, {
@@ -45,16 +42,3 @@ export function logout () {
       res.ok ? res.json() : Promise.reject(new Error(`Ошибка: ${res.status}`))
     )
 }
-
-// export function getContent(token) {
-//   return fetch(`${authUrl}/users/me`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${token}`,
-//     }
-//   })
-//     .then(res =>
-//       res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-//     )
-// }

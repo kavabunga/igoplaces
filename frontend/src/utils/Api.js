@@ -1,6 +1,5 @@
 import {
   serverUrl
-  // serverToken
 } from '../utils/constants.ts'
 
 class Api {
@@ -82,7 +81,6 @@ class Api {
 const api = new Api({
   baseUrl: serverUrl,
   headers: {
-    // authorization: serverToken,
     'Content-Type': 'application/json'
   }
 })
