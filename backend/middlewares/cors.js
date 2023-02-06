@@ -4,6 +4,7 @@ const allowedCors = [
   'http://nostromo.nomoredomainsclub.ru',
   'http://localhost:3000',
   'http://localhost:3001',
+  'https://localhost:3001',
 ];
 
 module.exports = (req, res, next) => {

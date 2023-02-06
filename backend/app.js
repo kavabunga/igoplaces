@@ -1,60 +1,51 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { xss } = require('express-xss-sanitizer');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const { validateUser, validateUserCredentials } = require('./middlewares/requestValidation');
-const usersRouter = require('./routes/users');
-const cardsRouter = require('./routes/cards');
-const wrongRouteHandler = require('./middlewares/wrongRouteHandler');
-const { login, createUser } = require('./controllers/users');
 const cors = require('./middlewares/cors');
-const auth = require('./middlewares/auth');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const router = require('./routes');
 
 const { PORT = 3000, NODE_ENV } = process.env;
 const app = express();
 
-// подключаем rate-limiter
+// Rate-limiter config
 const limiter = rateLimit({
   windowMs: 60 * 1000,
-  max: NODE_ENV === 'production' ? 10 : 100,
+  max: NODE_ENV === 'production' ? 10 : 1000,
 });
 
+// Limit and log requests
 app.use(limiter);
-
-app.use(bodyParser.json());
-app.use(cookieParser());
-
 app.use(requestLogger);
 
+app.use(express.json());
+app.use(cookieParser());
+
+// Security
 app.use(cors);
 app.use(xss());
 app.use(helmet());
 
-// краш-тест сервера
+// Crush test option (TO DELETE)
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
 
-app.post('/signin', validateUserCredentials, login);
-app.post('/signup', validateUser, createUser);
+// Main routing
+app.use(router);
 
-app.use(auth);
-
-app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
-app.use('*', wrongRouteHandler);
-
+// Log errors
 app.use(errorLogger);
 
+// Process errors
 app.use(errors());
 app.use(errorHandler);
 

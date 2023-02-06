@@ -107,13 +107,12 @@ function App () {
   }
 
   function handleCardLike (card) {
-    const isLiked = card.likes.some(i => i === currentUser._id)
+    const isLiked = card.likes.some(i => i._id === currentUser._id)
     api.likeCard(card._id, !isLiked)
       .then(newCard => {
         setCards((state) =>
-          state.map((c) => {
-            return c._id === card._id ? newCard : c
-          }
+          state.map((c) =>
+            c._id === card._id ? newCard : c
           )
         )
       })
@@ -147,11 +146,6 @@ function App () {
       })
   }
 
-  function handleLogin () {
-    setLoggedIn(true)
-    getData()
-  }
-
   function onRegister (email, password) {
     return auth.register(email, password)
       .then(res => {
@@ -170,7 +164,8 @@ function App () {
   function onLogin (email, password) {
     return auth.authorize(email, password)
       .then(res => {
-        handleLogin()
+        setLoggedIn(true)
+        getData()
         history.push('/')
       })
       .catch(err => {

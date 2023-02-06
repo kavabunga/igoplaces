@@ -12,7 +12,7 @@ module.exports.login = async function (req, res, next) {
       name, about, avatar, email, _id,
     } = await User.findUserByCredentials(req.body.email, req.body.password);
     const token = jwt.sign({ _id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
-    res
+    return res
       .cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
@@ -27,26 +27,26 @@ module.exports.login = async function (req, res, next) {
         },
       });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
 module.exports.logout = (req, res, next) => {
   try {
-    res.status(200).clearCookie('jwt').clearCookie('authorized').send({
+    return res.status(200).clearCookie('jwt').clearCookie('authorized').send({
       message: 'Выход выполнен',
     });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
 module.exports.getUsers = async function (req, res, next) {
   try {
     const users = await User.find({});
-    res.send({ data: users });
+    return res.send({ data: users });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -54,11 +54,11 @@ module.exports.getUser = async function (req, res, next) {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      throw new DocumentNotFoundError(`Запрошенный пользователь с _id:${req.user._id} не найден`);
+      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${req.user._id} не найден`));
     }
-    res.send({ data: user });
+    return res.send({ data: user });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -66,11 +66,11 @@ module.exports.getUserById = async function (req, res, next) {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
-      throw new DocumentNotFoundError(`Запрошенный пользователь с _id:${req.params.id} не найден`);
+      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${req.params.id} не найден`));
     }
-    res.send({ data: user });
+    return res.send({ data: user });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -82,17 +82,16 @@ module.exports.createUser = async function (req, res, next) {
     const {
       name, about, avatar, email, _id,
     } = user;
-    res.send({
+    return res.status(201).send({
       data: {
         name, about, avatar, email, _id,
       },
     });
   } catch (err) {
     if (err.code === 11000) {
-      res.status(errorCodes.HTTP_CONFLICT).send({ message: 'Пользователь с таким email уже зарегистрирован' });
-      return;
+      return res.status(errorCodes.HTTP_CONFLICT).send({ message: 'Пользователь с таким email уже зарегистрирован' });
     }
-    next(err);
+    return next(err);
   }
 };
 
@@ -109,11 +108,11 @@ module.exports.updateUser = async function (req, res, next) {
       },
     );
     if (!user) {
-      throw new DocumentNotFoundError(`Запрошенный пользователь с _id:${owner} не найден`);
+      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${owner} не найден`));
     }
-    res.send({ data: user });
+    return res.send({ data: user });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -130,10 +129,10 @@ module.exports.updateAvatar = async function (req, res, next) {
       },
     );
     if (!user) {
-      throw new DocumentNotFoundError(`Запрошенный пользователь с _id:${owner} не найден`);
+      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${owner} не найден`));
     }
-    res.send({ data: user });
+    return res.send({ data: user });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
