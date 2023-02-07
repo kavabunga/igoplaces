@@ -1,11 +1,18 @@
+const mongoose = require('mongoose');
 const HttpError = require('../errors/HttpError');
 const { errorCodes } = require('../util/constants.ts');
 
 module.exports.errorHandler = (err, req, res, next) => {
   if (err instanceof HttpError) {
-    res.status(err.statusCode).send({ message: err.message });
-    return;
+    return res.status(err.statusCode).send({ message: err.message });
+  }
+  if (err instanceof mongoose.Error.ValidationError) {
+    return res.status(errorCodes.HTTP_BAD_REQUEST).send({ message: 'Переданы некорректные данные' });
+  }
+
+  if (err instanceof mongoose.Error.CastError) {
+    return res.status(errorCodes.HTTP_BAD_REQUEST).send({ message: 'Переданы некорректные данные' });
   }
   res.status(errorCodes.HTTP_DEFAULT_ERROR).send({ message: 'Ошибка по-умолчанию' });
-  next();
+  return next();
 };

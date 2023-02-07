@@ -4,22 +4,27 @@ const User = require('../models/user');
 const DocumentNotFoundError = require('../errors/DocumentNotFoundError');
 const { errorCodes } = require('../util/constants.ts');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET = 'some-secret-key', DOMAIN = 'localhost' } = process.env;
 
 module.exports.login = async function (req, res, next) {
   try {
     const {
       name, about, avatar, email, _id,
     } = await User.findUserByCredentials(req.body.email, req.body.password);
-    const token = jwt.sign({ _id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
+    const token = jwt.sign({ _id }, JWT_SECRET, { expiresIn: '7d' });
     return res
       .cookie('jwt', token, {
+        domain: DOMAIN,
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: true,
+        sameSite: 'none',
+        secure: true,
       })
       .cookie('authorized', true, {
+        domain: DOMAIN,
         maxAge: 3600000 * 24 * 7,
+        sameSite: 'none',
+        secure: true,
       })
       .send({
         data: {
@@ -31,11 +36,20 @@ module.exports.login = async function (req, res, next) {
   }
 };
 
-module.exports.logout = (req, res, next) => {
+module.exports.signout = (req, res, next) => {
   try {
-    return res.status(200).clearCookie('jwt').clearCookie('authorized').send({
-      message: 'Выход выполнен',
-    });
+    return res
+      .clearCookie('jwt', {
+        path: '/',
+        domain: DOMAIN,
+      })
+      .clearCookie('authorized', {
+        path: '/',
+        domain: DOMAIN,
+      })
+      .send({
+        message: 'Выход выполнен',
+      });
   } catch (err) {
     return next(err);
   }

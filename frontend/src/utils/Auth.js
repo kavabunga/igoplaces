@@ -31,7 +31,7 @@ export function authorize (email, password) {
 };
 
 export function logout () {
-  return fetch(`${authUrl}/users/me/logout`, {
+  return fetch(`${authUrl}/signout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

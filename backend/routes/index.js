@@ -2,13 +2,14 @@ const router = require('express').Router();
 const { validateUser, validateUserCredentials } = require('../middlewares/requestValidation');
 const usersRouter = require('./users');
 const cardsRouter = require('./cards');
-const { login, createUser } = require('../controllers/users');
+const { login, createUser, signout } = require('../controllers/users');
 const wrongRouteHandler = require('../middlewares/wrongRouteHandler');
 const auth = require('../middlewares/auth');
 
 // Authorization routes
 router.post('/signin', validateUserCredentials, login);
 router.post('/signup', validateUser, createUser);
+router.post('/signout', signout);
 
 // Authorization middleware
 router.use(auth);

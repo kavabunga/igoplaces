@@ -46,14 +46,16 @@ function App () {
       })
   }
 
-  function checkCookie (cookie) {
+  function checkCookie (cookie, value) {
     const str = '^(.*;)?s*' + cookie + 's*=s*[^;]+(.*)?$'
     const regExp = new RegExp(str)
-    return document.cookie.match(regExp) !== null
+    const res = document.cookie.match(regExp)
+    console.log(res)
+    return res !== null ? res[0] === cookie + '=' + value : false
   }
 
   React.useEffect(() => {
-    if (checkCookie('authorized')) {
+    if (checkCookie('authorized', true)) {
       setLoggedIn(true)
       getData()
       history.push('/')
@@ -177,13 +179,22 @@ function App () {
 
   function onSignOut () {
     auth.logout()
-    history.push('/sign-in')
-    setCurrentUser({
-      name: '',
-      about: '',
-      avatar: '',
-      email: ''
-    })
+      .then(res => {
+        history.push('/sign-in')
+        setCurrentUser({
+          name: '',
+          about: '',
+          avatar: '',
+          email: ''
+        })
+      }
+      )
+      .catch(err => {
+        setIsRegistrationSuccess(false)
+        setInfoTooltipOpen(true)
+        console.log(err)
+      }
+      )
   }
 
   return (
