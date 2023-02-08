@@ -4,7 +4,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getCards = async function (req, res, next) {
   try {
-    const cards = await Card.find({}).populate('owner').populate('likes').sort({ createdAt: 'desc' });
+    const cards = await Card.find({}).populate(['owner', 'likes']).sort({ createdAt: 'desc' });
     return res.send({ data: cards });
   } catch (err) {
     return next(err);

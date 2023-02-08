@@ -50,7 +50,6 @@ function App () {
     const str = '^(.*;)?s*' + cookie + 's*=s*[^;]+(.*)?$'
     const regExp = new RegExp(str)
     const res = document.cookie.match(regExp)
-    console.log(res)
     return res !== null ? res[0] === cookie + '=' + value : false
   }
 

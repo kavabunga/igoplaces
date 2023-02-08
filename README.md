@@ -14,11 +14,14 @@ Web-application for sharing pictures of different places. The project contains b
 
 ## Features
 
-- responsive and adaptive layout;
+- responsive and adaptive front-end;
 - user authorization;
-- editing and posting user profile data and cards;
+- editing user profile data;
+- posting, deleting and liking cards;
 - server requests and database validation;
 - security middlewares.
+
+Read more about [**front-end**](/frontend/README.md) and [**back-end**](/backend/README.md) of the project.
 
 ## Links
 

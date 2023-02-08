@@ -10,13 +10,19 @@ Server-side for the project **Mesto** — web-application for sharing pictures o
 
 ## Features
 
-- user authorization (signup, signin, authentication via **JWT**);
+- user authorization;
+- authentication via **JWT** stored safely in httpOnly cookies;
 - editing user profile data;
 - posting and editing cards;
 - liking cards;
 - server requests validation (via **Celebrate** library);
 - database entries validation (via **Mongoose** scheme validators);
-- security middlewares (including CORS, XSS, Helmet, Request Limiter).
+- security middlewares:
+  - headers control by [helmet](https://www.npmjs.com/package/helmet);
+  - request limiting by [express-rate-limit](https://www.npmjs.com/package/express-rate-limit);
+  - XSS sanitation by [express-xss-sanitizer](https://www.npmjs.com/package/express-xss-sanitizer);
+  - CORS;
+- requests and errors logging.
 
 ## Project structure
 
@@ -40,7 +46,7 @@ Server-side for the project **Mesto** — web-application for sharing pictures o
 | ------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
 | `/signup`                | `POST`      | { "email": "foo@bar.com", "password": "foo", "name": "bar", "about": "bar", "avatar": "https://foo.com/bar.bmp" } | Sign up a new user                  |
 | `/signin`                | `POST`      | { "email": "foo@bar.com", "password": "foo" }                                                                     | Sign in a user                      |
-| `/users/me`              | `POST`      |                                                                                                                   | Logout current user                 |
+| `/signout`               | `POST`      |                                                                                                                   | Logout current user                 |
 | `/users/me`              | `PATCH`     | { "name": "foo", "about": "bar" }                                                                                 | Update user information             |
 | `/users/me/avatar`       | `PATCH`     | { "avatar": "https://foo.com/bar.bmp" }                                                                           | Update user avatar                  |
 | `/users`                 | `GET`       |                                                                                                                   | Get a list of users                 |

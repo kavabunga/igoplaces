@@ -39,7 +39,8 @@ const validationConfig = {
   inputErrorClass: 'form__input_type_error'
 }
 
-const serverUrl = 'https://api.nostromo.nomoredomainsclub.ru'
+// const serverUrl = 'https://api.nostromo.nomoredomainsclub.ru'
+const serverUrl = 'http://localhost:3000'
 const authUrl = serverUrl
 
 export {
