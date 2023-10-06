@@ -1,4 +1,4 @@
-# :mount_fuji: Mesto • ![Status in progress](https://badgen.net/badge/status/in%20progress/yellow)
+# :mount_fuji: Mesto • ![Status finished](https://badgen.net/badge/status/finished/green)
 
 Web-application for sharing pictures of different places. The project contains back- and front-end sides of the application. The project made at "WEB-development" course at [Yandex.Practicum](https://practicum.yandex.ru/ 'Yandex.Practicum').
 
@@ -23,8 +23,6 @@ Web-application for sharing pictures of different places. The project contains b
 
 Read more about [**front-end**](/frontend/README.md) and [**back-end**](/backend/README.md) of the project.
 
-## Links
+## Demo
 
-- IP 158.160.5.223
-- Frontend https://nostromo.nomoredomainsclub.ru/
-- Backend https://api.nostromo.nomoredomainsclub.ru/
+Currently not deployed
