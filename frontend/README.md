@@ -1,4 +1,4 @@
-# :mount_fuji: Mesto (front-end) • ![Status in progress](https://badgen.net/badge/status/in%20progress/yellow)
+# :mount_fuji: Mesto (front-end) • ![Status finished](https://badgen.net/badge/status/finished/green)
 
 Client-side for the project **Mesto** — web-application for sharing pictures of different places.
 
@@ -7,7 +7,7 @@ Client-side for the project **Mesto** — web-application for sharing pictures o
 - **HTML**
 - **CSS**
 - **JavaScript**
-- [**React.js**](https://reactjs.org "React.js")
+- [**React.js**](https://reactjs.org 'React.js')
 
 ## Features
 

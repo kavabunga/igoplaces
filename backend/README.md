@@ -1,12 +1,12 @@
-# :mount_fuji: Mesto (back-end) • ![Status in progress](https://badgen.net/badge/status/in%20progress/yellow)
+# :mount_fuji: Mesto (back-end) • ![Status finished](https://badgen.net/badge/status/finished/green)
 
 Server-side for the project **Mesto** — web-application for sharing pictures of different places.
 
 ## Technology
 
-- [**Node.js**](https://nodejs.org/en/ "Node.js")
-- [**Express.js**](https://expressjs.com "Express.js")
-- [**MongoDB**](https://www.mongodb.com "MongoDB") + [**Mongoose.js**](https://mongoosejs.com "Mongoose")
+- [**Node.js**](https://nodejs.org/en/ 'Node.js')
+- [**Express.js**](https://expressjs.com 'Express.js')
+- [**MongoDB**](https://www.mongodb.com 'MongoDB') + [**Mongoose.js**](https://mongoosejs.com 'Mongoose')
 
 ## Features
 
