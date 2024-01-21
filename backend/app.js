@@ -35,7 +35,7 @@ app.use(helmet());
 // Crush test option (TO DELETE)
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error('Server is going to fail');
   }, 0);
 });
 

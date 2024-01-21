@@ -6,7 +6,9 @@ module.exports.validateUser = celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(/^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i),
+    avatar: Joi.string().regex(
+      /^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i,
+    ),
   }),
 });
 
@@ -26,14 +28,22 @@ module.exports.validateUserInfo = celebrate({
 
 module.exports.validateUserAvatar = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().regex(/^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i),
+    avatar: Joi.string()
+      .required()
+      .regex(
+        /^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i,
+      ),
   }),
 });
 
 module.exports.validateCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().regex(/^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i),
+    link: Joi.string()
+      .required()
+      .regex(
+        /^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i,
+      ),
   }),
 });
 

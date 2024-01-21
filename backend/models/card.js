@@ -10,7 +10,8 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
-    match: /^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i,
+    match:
+      /^https?:\/\/(www\.)?[\w\-_~]+\.[\w\-_~]+[\w\-.~:/?#[\]@!$&'()*+,;=]*#?/i,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -18,10 +19,12 @@ const cardSchema = new mongoose.Schema({
     required: true,
   },
   likes: {
-    type: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
-    }],
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
     default: [],
   },
   createdAt: {
