@@ -1,27 +1,27 @@
-import React from 'react'
-import PopupWithForm from './PopupWithForm'
+import React from 'react';
+import PopupWithForm from './PopupWithForm';
 
-export default function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
-  const [card, setCard] = React.useState({ name: '', link: '' })
+export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+  const [card, setCard] = React.useState({ name: '', link: '' });
 
   React.useEffect(() => {
-    setCard({ name: '', link: '' })
-  }, [isOpen])
+    setCard({ name: '', link: '' });
+  }, [isOpen]);
 
-  function handleChangeInput (e) {
-    setCard({ ...card, [e.target.name]: e.target.value })
+  function handleChangeInput(e) {
+    setCard({ ...card, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit (e) {
-    e.preventDefault()
-    onAddPlace(card)
+  function handleSubmit(e) {
+    e.preventDefault();
+    onAddPlace(card);
   }
 
   return (
     <PopupWithForm
       name="add-item"
-      title="Новое место"
-      button="Создать"
+      title="New place"
+      button="Add"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -33,7 +33,7 @@ export default function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
             className="form__input form__input_name_name"
             name="name"
             value={card.name}
-            placeholder="Название"
+            placeholder="Name"
             required
             minLength="2"
             maxLength="30"
@@ -47,7 +47,7 @@ export default function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
             className="form__input form__input_name_image-link"
             name="link"
             value={card.link}
-            placeholder="Ссылка на картинку"
+            placeholder="Image link"
             onChange={handleChangeInput}
             required
           />
@@ -55,5 +55,5 @@ export default function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
         </label>
       </fieldset>
     </PopupWithForm>
-  )
+  );
 }
