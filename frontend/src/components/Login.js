@@ -32,7 +32,7 @@ export default function Login({ onLogin }) {
   return (
     <section className="auth page__element">
       <div className="auth__container">
-        <h2 className="auth__title">Вход</h2>
+        <h2 className="auth__title">Sign in</h2>
         <form className="form form_type_login" name="form" onSubmit={handleSubmit}>
           <fieldset className="form__fieldset">
             <label>
@@ -68,7 +68,7 @@ export default function Login({ onLogin }) {
             type="submit"
             className="form__submit-button form__submit-button_theme_dark auth__button"
           >
-            Войти
+            Sign in
           </button>
         </form>
       </div>
