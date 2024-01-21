@@ -1,5 +1,5 @@
 const HttpError = require('./HttpError');
-const { errorCodes } = require('../util/constants.ts');
+const { errorCodes } = require('../util/constants');
 
 module.exports = class ForbiddenError extends HttpError {
   constructor(message) {

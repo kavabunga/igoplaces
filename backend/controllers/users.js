@@ -2,15 +2,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const DocumentNotFoundError = require('../errors/DocumentNotFoundError');
-const { errorCodes } = require('../util/constants.ts');
+const { errorCodes } = require('../util/constants');
 
 const { JWT_SECRET = 'some-secret-key', DOMAIN = 'localhost' } = process.env;
 
 module.exports.login = async function (req, res, next) {
   try {
-    const {
-      name, about, avatar, email, _id,
-    } = await User.findUserByCredentials(req.body.email, req.body.password);
+    const { name, about, avatar, email, _id } =
+      await User.findUserByCredentials(req.body.email, req.body.password);
     const token = jwt.sign({ _id }, JWT_SECRET, { expiresIn: '7d' });
     return res
       .cookie('jwt', token, {
@@ -28,7 +27,11 @@ module.exports.login = async function (req, res, next) {
       })
       .send({
         data: {
-          name, about, avatar, email, _id,
+          name,
+          about,
+          avatar,
+          email,
+          _id,
         },
       });
   } catch (err) {
@@ -48,7 +51,7 @@ module.exports.signout = (req, res, next) => {
         domain: DOMAIN,
       })
       .send({
-        message: 'Выход выполнен',
+        message: 'Signout successfull',
       });
   } catch (err) {
     return next(err);
@@ -68,7 +71,11 @@ module.exports.getUser = async function (req, res, next) {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${req.user._id} не найден`));
+      return next(
+        new DocumentNotFoundError(
+          `Requested user with id:${req.user._id} not found`,
+        ),
+      );
     }
     return res.send({ data: user });
   } catch (err) {
@@ -80,7 +87,11 @@ module.exports.getUserById = async function (req, res, next) {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
-      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${req.params.id} не найден`));
+      return next(
+        new DocumentNotFoundError(
+          `Requested user with id:${req.user._id} not found`,
+        ),
+      );
     }
     return res.send({ data: user });
   } catch (err) {
@@ -93,17 +104,21 @@ module.exports.createUser = async function (req, res, next) {
     const hash = await bcrypt.hash(req.body.password, 10);
     req.body.password = hash;
     const user = await User.create(req.body);
-    const {
-      name, about, avatar, email, _id,
-    } = user;
+    const { name, about, avatar, email, _id } = user;
     return res.status(201).send({
       data: {
-        name, about, avatar, email, _id,
+        name,
+        about,
+        avatar,
+        email,
+        _id,
       },
     });
   } catch (err) {
     if (err.code === 11000) {
-      return res.status(errorCodes.HTTP_CONFLICT).send({ message: 'Пользователь с таким email уже зарегистрирован' });
+      return res
+        .status(errorCodes.HTTP_CONFLICT)
+        .send({ message: 'User with this email already exists' });
     }
     return next(err);
   }
@@ -122,7 +137,9 @@ module.exports.updateUser = async function (req, res, next) {
       },
     );
     if (!user) {
-      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${owner} не найден`));
+      return next(
+        new DocumentNotFoundError(`Requested user with id:${owner} not found`),
+      );
     }
     return res.send({ data: user });
   } catch (err) {
@@ -143,7 +160,9 @@ module.exports.updateAvatar = async function (req, res, next) {
       },
     );
     if (!user) {
-      return next(new DocumentNotFoundError(`Запрошенный пользователь с _id:${owner} не найден`));
+      return next(
+        new DocumentNotFoundError(`Requested user with id:${owner} not found`),
+      );
     }
     return res.send({ data: user });
   } catch (err) {

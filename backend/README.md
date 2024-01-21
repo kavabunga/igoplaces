@@ -1,6 +1,6 @@
-# :mount_fuji: Mesto (back-end) • ![Status finished](https://badgen.net/badge/status/finished/green)
+# :mount_fuji: IGoPlaces (back-end) • ![Status finished](https://badgen.net/badge/status/finished/green)
 
-Server-side for the project **Mesto** — web-application for sharing pictures of different places.
+Server-side for the project **IGoPlaces** — web-application for sharing pictures of different places.
 
 ## Technology
 

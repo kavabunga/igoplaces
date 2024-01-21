@@ -1,11 +1,4 @@
-const allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-const allowedCors = [
-  'https://nostromo.nomoredomainsclub.ru',
-  'http://nostromo.nomoredomainsclub.ru',
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'https://localhost:3001',
-];
+const { allowedMethods, allowedCors } = require('../util/constants');
 
 module.exports = (req, res, next) => {
   const { method } = req;
