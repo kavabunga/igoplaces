@@ -39,7 +39,7 @@ const validationConfig = {
   inputErrorClass: 'form__input_type_error',
 };
 
-const serverUrl = 'http://wonderplace.semenkatz.com/igoplaces/api/';
+const serverUrl = 'https://api.igoplaces.semenkatz.com/';
 const authUrl = serverUrl;
 
 export {
