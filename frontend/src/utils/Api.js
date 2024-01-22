@@ -11,9 +11,7 @@ class Api {
     params.credentials = 'include';
     return fetch(url, params).then((res) => {
       if (res.ok) {
-        return res.json().then(() => {
-          return res.data;
-        });
+        return res.json().then(({ data }) => data);
       }
       return Promise.reject(new Error(`Error: ${res.status}`));
     });
