@@ -1,12 +1,8 @@
-# :mount_fuji: IGoPlaces (back-end) • ![Status finished](https://badgen.net/badge/status/finished/green)
+# I Go Places • API
 
-Server-side for the project **IGoPlaces** — web-application for sharing pictures of different places.
+![Static Badge](https://img.shields.io/badge/status-finished-success) ![Static Badge](https://img.shields.io/badge/JavaScript-gray?logo=JavaScript) ![Static Badge](https://img.shields.io/badge/Node.js-gray?logo=nodedotjs) ![Static Badge](https://img.shields.io/badge/Express.js-gray?logo=Express) ![Static Badge](https://img.shields.io/badge/MongoDB-gray?logo=MongoDB) ![Static Badge](https://img.shields.io/badge/Mongoose-gray?logo=Mongoose)
 
-## Technology
-
-- [**Node.js**](https://nodejs.org/en/ 'Node.js')
-- [**Express.js**](https://expressjs.com 'Express.js')
-- [**MongoDB**](https://www.mongodb.com 'MongoDB') + [**Mongoose.js**](https://mongoosejs.com 'Mongoose')
+Server-side for the project **I Go Places** — web-application for sharing pictures of different places. Demo is available here: [igoplaces.semenkatz.com](https://igoplaces.semenkatz.com)
 
 ## Features
 
@@ -24,21 +20,45 @@ Server-side for the project **IGoPlaces** — web-application for sharing pictur
   - CORS;
 - requests and errors logging.
 
-## Project structure
+## Project structure and setup
 
-### Directories:
+### Directories
 
-`/routes` — request routers  
-`/controllers` — request controllers for interactions with **users** and **cards** databases  
-`/models` — database schemes for **users** and **cards** databases  
-`/errors` — custom error classes  
-`/util` — helper functions and constants
+```
+/
+├── routes // request routers
+├── controllers // request controllers for interactions with Users and Cards databases
+├── models // database schemes for Users and Cards databases
+├── errors // custom error classes
+├── util // helper functions and constants
+```
 
-### Usage:
+### Usage
 
-`npm i` — install dependencies  
-`npm run start` — run server  
-`npm run dev` — run server in development mode with **hot-reload** enabled
+```bash
+## Install dependencies (clean install recommended)
+npm ci
+
+## Run server in development mode with hot-reload enabled
+npm run dev
+
+## Run server
+npm run start
+```
+
+### Env
+
+These variables need to be specified in **.env** file located in root folder: `NODE_ENV`, `PORT`, `JWT_SECRET`, `ALLOWED_CORS`, `DOMAIN`
+
+#### Example of .env file config
+
+```text
+NODE_ENV=production
+PORT=3000
+JWT_SECRET=secret-phrase
+ALLOWED_CORS=http://something.example.com, https://something.example.com
+DOMAIN=example.com
+```
 
 ## API
 
