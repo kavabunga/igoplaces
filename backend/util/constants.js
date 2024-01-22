@@ -11,9 +11,4 @@ module.exports.errorCodes = {
 
 module.exports.allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
-module.exports.allowedCors = [
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'https://localhost:3001',
-  ...ALLOWED_CORS.split(', '),
-];
+module.exports.allowedCors = ALLOWED_CORS.split(', ');
