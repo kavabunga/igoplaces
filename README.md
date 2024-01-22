@@ -2,6 +2,8 @@
 
 ![Static Badge](https://img.shields.io/badge/status-finished-success) ![Static Badge](https://img.shields.io/badge/JavaScript-gray?logo=JavaScript) ![Static Badge](https://img.shields.io/badge/CSS-gray?logo=CSS3) ![Static Badge](https://img.shields.io/badge/BEM-gray?logo=BEM) ![Static Badge](https://img.shields.io/badge/React-gray?logo=React) ![Static Badge](https://img.shields.io/badge/React_Router-gray?logo=reactrouter) ![Static Badge](https://img.shields.io/badge/Node.js-gray?logo=nodedotjs) ![Static Badge](https://img.shields.io/badge/Express.js-gray?logo=Express) ![Static Badge](https://img.shields.io/badge/MongoDB-gray?logo=MongoDB) ![Static Badge](https://img.shields.io/badge/Mongoose-gray?logo=Mongoose)
 
+![Jan-22-2024 22-38-52](https://github.com/kavabunga/react-mesto-api-full/assets/5512536/ea793988-d4b6-4939-9a8c-52955d931a7e)
+
 Web-application for sharing pictures of different places. The project contains back- and front-end sides of the application. The project made at "WEB-development" course at [**Yandex.Practicum**](https://practicum.yandex.ru/ 'Yandex.Practicum'). Demo is available here: [**igoplaces.semenkatz.com**](https://igoplaces.semenkatz.com)
 
 ## Features
