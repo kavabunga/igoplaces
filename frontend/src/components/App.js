@@ -47,10 +47,10 @@ function App() {
   }
 
   function checkCookie(cookie, value) {
-    const str = `^(.*;)?s*${cookie}s*=s*[^;]+(.*)?$`;
+    const str = '^(.*;)?s*' + cookie + 's*=s*[^;]+(.*)?$';
     const regExp = new RegExp(str);
     const res = document.cookie.match(regExp);
-    return res !== null ? res[0] === `${cookie}=${value}` : false;
+    return res !== null ? res[0] === cookie + '=' + value : false;
   }
 
   React.useEffect(() => {

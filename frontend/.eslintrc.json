@@ -24,6 +24,7 @@
     "react/react-in-jsx-scope": "off",
     "no-underscore-dangle": "off",
     "no-console": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "prefer-template": "off"
   }
 }
