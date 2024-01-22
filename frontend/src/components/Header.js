@@ -12,17 +12,17 @@ export default function Header({ onSignOut }) {
         <Switch>
           <Route path={'/sign-in'}>
             <Link className="link" to="/sign-up">
-              Регистрация
+              Registration
             </Link>
           </Route>
           <Route path={'/sign-up'}>
             <Link className="link" to="/sign-in">
-              Войти
+              Sign in
             </Link>
           </Route>
           <Route exact path={'/'}>
             <button className="link header__button" onClick={onSignOut}>
-              Выйти
+              Sign out
             </button>
           </Route>
         </Switch>
