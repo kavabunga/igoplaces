@@ -35,7 +35,7 @@ src
 npm ci
 
 ## Run project in development mode
-npm run dev
+npm start
 
 ## Build project for production
 npm run build
